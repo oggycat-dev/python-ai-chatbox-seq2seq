@@ -1,212 +1,212 @@
-# Chatbot Seq2Seq đa ngôn ngữ (Tiếng Anh & Tiếng Việt)
+# Multilingual Seq2Seq Chatbot (English & Vietnamese)
 
-Đây là một dự án chatbot sử dụng mô hình Sequence-to-Sequence (Seq2Seq) được xây dựng bằng PyTorch. Chatbot được thiết kế để hỗ trợ cả tiếng Anh và tiếng Việt thông qua một giao diện đơn giản.
+This is a chatbot project using a Sequence-to-Sequence (Seq2Seq) model built with PyTorch. The chatbot is designed to support both English and Vietnamese through a simple interface.
 
-## Tính năng chính
+## Key Features
 
-- **Hỗ trợ đa ngôn ngữ**: Tự động phát hiện và chuyển đổi giữa tiếng Anh và tiếng Việt
-- **Kiến trúc Seq2Seq**: Sử dụng mô hình encoder-decoder với GRU
-- **Giao diện thống nhất**: Một file duy nhất cho giao diện chat (`chat/unified_chat.py`)
-- **Các mô hình đã huấn luyện**: Có sẵn mô hình cho cả tiếng Anh và tiếng Việt
+- **Multilingual Support**: Automatic detection and switching between English and Vietnamese
+- **Seq2Seq Architecture**: Using an encoder-decoder model with GRU
+- **Unified Interface**: A single file for the chat interface (`chat/unified_chat.py`)
+- **Pre-trained Models**: Available models for both English and Vietnamese
 
-## Cấu trúc dự án
+## Project Structure
 
 ```
 .
-├── chat/                      # Giao diện chat
-│   └── unified_chat.py        # Giao diện chat thống nhất hỗ trợ đa ngôn ngữ
-├── data/                      # Dữ liệu huấn luyện
-│   ├── conversation.txt       # Dữ liệu tiếng Anh gốc
-│   ├── conversation_new.txt   # Dữ liệu tiếng Anh mở rộng
-│   └── conversation_vietnamese.txt  # Dữ liệu tiếng Việt
-├── models/                    # Các mô hình đã huấn luyện
-│   ├── chatbot.pt             # Mô hình tiếng Anh ban đầu
-│   ├── chatbot_new.pt         # Mô hình tiếng Anh cải tiến
-│   ├── vietnamese_chatbot.pt  # Mô hình tiếng Việt
-│   └── ...                    # Các từ điển và mô hình checkpoint
-├── src/                       # Mã nguồn chính
-│   ├── model.py               # Định nghĩa kiến trúc mô hình Seq2Seq
-│   └── preprocess.py          # Xử lý dữ liệu đầu vào
-├── tools/                     # Các công cụ và tiện ích
-│   ├── check_model.py         # Kiểm tra mô hình
-│   ├── download_nltk_resources.py # Tải các tài nguyên NLTK
-│   ├── organize_project.py    # Tổ chức cấu trúc dự án
-│   └── recreate_dictionary.py # Tạo lại từ điển
-├── train/                     # Các file huấn luyện mô hình
-│   ├── train.py               # Huấn luyện mô hình tiếng Anh
-│   ├── train_vietnamese.py    # Huấn luyện mô hình tiếng Việt
-│   └── retrain.py             # Huấn luyện lại mô hình
-├── quickstart.py              # Script tự động hoá quá trình thiết lập và chạy
-├── requirements.txt           # Các thư viện cần thiết
-└── README.md                  # Tài liệu hướng dẫn
+├── chat/                      # Chat interface
+│   └── unified_chat.py        # Unified chat interface with multilingual support
+├── data/                      # Training data
+│   ├── conversation.txt       # Original English data
+│   ├── conversation_new.txt   # Extended English data
+│   └── conversation_vietnamese.txt  # Vietnamese data
+├── models/                    # Trained models
+│   ├── chatbot.pt             # Initial English model
+│   ├── chatbot_new.pt         # Improved English model
+│   ├── vietnamese_chatbot.pt  # Vietnamese model
+│   └── ...                    # Dictionaries and model checkpoints
+├── src/                       # Source code
+│   ├── model.py               # Seq2Seq model architecture definition
+│   └── preprocess.py          # Input data processing
+├── tools/                     # Tools and utilities
+│   ├── check_model.py         # Model checker
+│   ├── download_nltk_resources.py # Download NLTK resources
+│   ├── organize_project.py    # Project structure organizer
+│   └── recreate_dictionary.py # Dictionary recreation
+├── train/                     # Model training files
+│   ├── train.py               # English model training
+│   ├── train_vietnamese.py    # Vietnamese model training
+│   └── retrain.py             # Model retraining
+├── quickstart.py              # Script to automate setup and run process
+├── requirements.txt           # Required libraries
+└── README.md                  # Documentation
 ```
 
-## Khởi động nhanh
+## Quick Start
 
-### Cài đặt
+### Installation
 
-1. Cài đặt các thư viện cần thiết:
+1. Install required libraries:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Tải tài nguyên NLTK (nếu cần):
+2. Download NLTK resources (if needed):
 ```bash
 python tools/download_nltk_resources.py
 ```
 
-Hoặc sử dụng script tự động:
+Or use the automatic script:
 ```bash
 python quickstart.py --setup
 ```
 
-### Sử dụng chatbot
+### Using the Chatbot
 
-Cách đơn giản nhất để bắt đầu là sử dụng giao diện chat thống nhất:
+The simplest way to start is using the unified chat interface:
 ```bash
 python chat/unified_chat.py
 ```
 
-Giao diện này sẽ tự động phát hiện ngôn ngữ và sử dụng mô hình phù hợp.
+This interface will automatically detect the language and use the appropriate model.
 
-Hoặc sử dụng script quickstart với các chế độ khác nhau:
+Or use the quickstart script with different modes:
 ```bash
-python quickstart.py --chat english            # Chế độ tiếng Anh
-python quickstart.py --chat vietnamese_native  # Chế độ tiếng Việt (mô hình bản địa)
-python quickstart.py --chat vietnamese_translate # Chế độ tiếng Việt (phiên dịch)
-python quickstart.py --chat auto               # Tự động phát hiện mô hình tốt nhất
+python quickstart.py --chat english            # English mode
+python quickstart.py --chat vietnamese_native  # Vietnamese mode (native model)
+python quickstart.py --chat vietnamese_translate # Vietnamese mode (translation)
+python quickstart.py --chat auto               # Auto-detect best model
 ```
 
-## Hướng dẫn sử dụng chi tiết
+## Detailed Usage Guide
 
-### 1. Huấn luyện mô hình
+### 1. Training Models
 
-#### Huấn luyện mô hình tiếng Anh:
+#### Training English Model:
 ```bash
 python train/train.py
 ```
 
-#### Huấn luyện mô hình tiếng Việt:
+#### Training Vietnamese Model:
 ```bash
 python train/train_vietnamese.py
 ```
 
-Hoặc sử dụng script tự động:
+Or use the automatic script:
 ```bash
-python quickstart.py --train english    # Huấn luyện mô hình tiếng Anh
-python quickstart.py --train vietnamese # Huấn luyện mô hình tiếng Việt
-python quickstart.py --train all        # Huấn luyện cả hai mô hình
+python quickstart.py --train english    # Train English model
+python quickstart.py --train vietnamese # Train Vietnamese model
+python quickstart.py --train all        # Train both models
 ```
 
-Bạn có thể theo dõi tiến trình huấn luyện qua thông tin hiển thị và mô hình sẽ được lưu vào thư mục `models/`.
+You can monitor the training progress through the displayed information, and the models will be saved in the `models/` directory.
 
-### 2. Thêm dữ liệu huấn luyện
+### 2. Adding Training Data
 
-#### Tiếng Anh:
-Thêm các cặp hội thoại vào file `data/conversation.txt` hoặc `data/conversation_new.txt` theo định dạng:
+#### English:
+Add conversation pairs to the `data/conversation.txt` or `data/conversation_new.txt` file in the format:
 ```
-Câu hỏi tiếng Anh [tab] Câu trả lời tiếng Anh
-```
-
-#### Tiếng Việt:
-Thêm các cặp hội thoại vào file `data/conversation_vietnamese.txt` theo định dạng:
-```
-Câu hỏi tiếng Việt [tab] Câu trả lời tiếng Việt
+English question [tab] English answer
 ```
 
-## Kiến trúc mô hình
+#### Vietnamese:
+Add conversation pairs to the `data/conversation_vietnamese.txt` file in the format:
+```
+Vietnamese question [tab] Vietnamese answer
+```
 
-Dự án sử dụng kiến trúc Sequence-to-Sequence với cơ chế Encoder-Decoder:
+## Model Architecture
+
+The project uses a Sequence-to-Sequence architecture with an Encoder-Decoder mechanism:
 
 ### Encoder
-Encoder nhận chuỗi đầu vào (câu hỏi của người dùng) và mã hóa thành một vector biểu diễn có kích thước cố định:
-- **Embedding Layer**: Chuyển đổi mỗi từ thành một vector đặc trưng
-- **GRU (Gated Recurrent Unit)**: Xử lý chuỗi các vector embedding để tạo ra một vector biểu diễn cuối cùng
+The encoder takes the input sequence (user's question) and encodes it into a fixed-size representation vector:
+- **Embedding Layer**: Converts each word into a feature vector
+- **GRU (Gated Recurrent Unit)**: Processes the sequence of embedding vectors to create a final representation vector
 
 ### Decoder
-Decoder nhận vector biểu diễn từ Encoder và tạo ra chuỗi đầu ra (câu trả lời):
-- **Embedding Layer**: Chuyển đổi từng từ thành vector đặc trưng
-- **GRU**: Sử dụng trạng thái ẩn từ Encoder để dự đoán từng từ trong chuỗi đầu ra
-- **Linear Layer**: Chuyển đổi vector đặc trưng thành phân phối xác suất cho từng từ trong từ điển
+The decoder takes the representation vector from the Encoder and generates the output sequence (answer):
+- **Embedding Layer**: Converts each word into a feature vector
+- **GRU**: Uses the hidden state from the Encoder to predict each word in the output sequence
+- **Linear Layer**: Converts the feature vector into a probability distribution for each word in the dictionary
 
-### Hỗ trợ tiếng Việt
-Dự án hỗ trợ tiếng Việt thông qua hai phương pháp:
+### Vietnamese Support
+The project supports Vietnamese through two methods:
 
-1. **Phương pháp phiên dịch**: Chuyển đổi ký tự tiếng Việt sang tiếng Anh, sử dụng mô hình tiếng Anh, sau đó dịch phản hồi trở lại thành tiếng Việt.
+1. **Translation Method**: Converting Vietnamese characters to English, using the English model, then translating the response back to Vietnamese.
 
-2. **Mô hình tiếng Việt bản địa**: Huấn luyện một mô hình mới với dữ liệu tiếng Việt, cho phép xử lý trực tiếp các ký tự tiếng Việt.
+2. **Native Vietnamese Model**: Training a new model with Vietnamese data, allowing direct processing of Vietnamese characters.
 
-## Tùy chỉnh mô hình
+## Model Customization
 
-Bạn có thể điều chỉnh các thông số trong các file huấn luyện để cải thiện hiệu suất:
+You can adjust parameters in the training files to improve performance:
 
-- `EMB_DIM`: Kích thước embedding (mặc định: 256)
-- `HID_DIM`: Kích thước lớp ẩn (mặc định: 128) 
-- `BATCH_SIZE`: Kích thước batch (mặc định: 64)
-- `LEARNING_RATE`: Tốc độ học (mặc định: 0.001)
-- `EPOCHS`: Số epoch (mặc định: 50)
+- `EMB_DIM`: Embedding size (default: 256)
+- `HID_DIM`: Hidden layer size (default: 128) 
+- `BATCH_SIZE`: Batch size (default: 64)
+- `LEARNING_RATE`: Learning rate (default: 0.001)
+- `EPOCHS`: Number of epochs (default: 50)
 
-## Xử lý lỗi phổ biến
+## Common Error Handling
 
-### Lỗi "Token không có trong từ điển"
-Xảy ra khi người dùng nhập một từ không có trong từ điển huấn luyện. Mô hình chỉ có thể nhận ra các từ đã xuất hiện trong dữ liệu huấn luyện.
+### "Token not in dictionary" Error
+Occurs when the user enters a word that's not in the training dictionary. The model can only recognize words that appeared in the training data.
 
-### Lỗi "không đủ dữ liệu huấn luyện"
-Nếu bạn thấy cảnh báo về việc thiếu dữ liệu huấn luyện, bạn cần thêm nhiều cặp câu hỏi-trả lời vào file dữ liệu. Mô hình cần ít nhất 10-20 cặp để huấn luyện một cách hiệu quả, và càng nhiều dữ liệu thì kết quả càng tốt.
+### "Not enough training data" Error
+If you see a warning about insufficient training data, you need to add more question-answer pairs to the data file. The model needs at least 10-20 pairs to train effectively, and more data yields better results.
 
-### Lỗi "CUDA out of memory"
-Xảy ra khi GPU không đủ bộ nhớ để huấn luyện mô hình. Giải pháp:
-- Giảm kích thước batch
-- Giảm kích thước mô hình (EMB_DIM, HID_DIM)
-- Sử dụng CPU thay vì GPU
+### "CUDA out of memory" Error
+Occurs when the GPU doesn't have enough memory to train the model. Solutions:
+- Reduce batch size
+- Reduce model size (EMB_DIM, HID_DIM)
+- Use CPU instead of GPU
 
-## Mẹo cải thiện chất lượng mô hình
+## Tips for Improving Model Quality
 
-### 1. Tăng cường dữ liệu huấn luyện
-Thêm nhiều cặp câu hỏi-trả lời đa dạng. Một số cách để mở rộng dữ liệu:
-- Thêm các câu hỏi và câu trả lời trong nhiều chủ đề khác nhau
-- Thêm các biến thể của cùng một câu hỏi (ví dụ: "bạn là ai?" và "bạn là người nào?")
-- Đảm bảo có các câu trả lời ngắn và dài để mô hình học cách phản hồi đa dạng
+### 1. Enhance Training Data
+Add diverse question-answer pairs. Some ways to expand data:
+- Add questions and answers on various topics
+- Add variations of the same question (e.g., "who are you?" and "what is your identity?")
+- Ensure a mix of short and long answers to help the model learn to respond diversely
 
-### 2. Điều chỉnh tham số huấn luyện
-Trong file huấn luyện, bạn có thể điều chỉnh:
-- `EPOCHS`: Tăng lên 100-200 để mô hình học sâu hơn
-- `EMB_DIM`: Tăng lên 512 để mô hình nắm bắt ngữ nghĩa tốt hơn
-- `HID_DIM`: Tăng lên 256 để mô hình có khả năng ghi nhớ ngữ cảnh tốt hơn
-- `LEARNING_RATE`: Giảm xuống 0.0005 nếu mô hình không hội tụ
+### 2. Adjust Training Parameters
+In the training file, you can adjust:
+- `EPOCHS`: Increase to 100-200 for deeper learning
+- `EMB_DIM`: Increase to 512 for better semantic understanding
+- `HID_DIM`: Increase to 256 for better context memory
+- `LEARNING_RATE`: Decrease to 0.0005 if the model isn't converging
 
-## Tổng quan về lệnh quickstart
+## Quickstart Command Overview
 
-Script `quickstart.py` là công cụ giúp bạn thực hiện các tác vụ phổ biến một cách nhanh chóng.
+The `quickstart.py` script is a tool to help you perform common tasks quickly.
 
-### Cú pháp chung
+### General Syntax
 ```bash
-python quickstart.py [LỆNH]
+python quickstart.py [COMMAND]
 ```
 
-### Các lệnh có sẵn
+### Available Commands
 
-1. **Cài đặt môi trường**
+1. **Environment Setup**
 ```bash
 python quickstart.py --setup
 ```
-Lệnh này sẽ cài đặt các thư viện cần thiết và tải tài nguyên NLTK.
+This command will install the necessary libraries and download NLTK resources.
 
-2. **Huấn luyện mô hình**
+2. **Model Training**
 ```bash
-python quickstart.py --train english      # Huấn luyện mô hình tiếng Anh
-python quickstart.py --train vietnamese   # Huấn luyện mô hình tiếng Việt
-python quickstart.py --train all          # Huấn luyện cả hai mô hình
+python quickstart.py --train english      # Train English model
+python quickstart.py --train vietnamese   # Train Vietnamese model
+python quickstart.py --train all          # Train both models
 ```
 
-3. **Khởi chạy chatbot**
+3. **Launch Chatbot**
 ```bash
-python quickstart.py --chat english            # Chế độ tiếng Anh
-python quickstart.py --chat vietnamese_translate # Chế độ tiếng Việt (phiên dịch)
-python quickstart.py --chat vietnamese_native  # Chế độ tiếng Việt (mô hình bản địa)
-python quickstart.py --chat auto               # Tự động phát hiện mô hình tốt nhất
+python quickstart.py --chat english            # English mode
+python quickstart.py --chat vietnamese_translate # Vietnamese mode (translation)
+python quickstart.py --chat vietnamese_native  # Vietnamese mode (native model)
+python quickstart.py --chat auto               # Auto-detect best model
 ```
 
-Tất cả các lệnh chat đều sử dụng giao diện thống nhất (`unified_chat.py`) với các tham số phù hợp.
+All chat commands use the unified interface (`unified_chat.py`) with appropriate parameters.
 
 
