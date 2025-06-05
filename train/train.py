@@ -14,7 +14,7 @@ input_texts, target_texts = read_data("data/conversation.txt")
 print(f"Đọc được {len(input_texts)} cặp hội thoại từ file.")
 
 # 2. Tạo từ điển từ -> số
-input_seqs, input_word2idx, _ = tokenize(input_texts)
+input_seqs, input_word2idx, input_idx2word = tokenize(input_texts)
 target_seqs, target_word2idx, target_idx2word = tokenize(target_texts)
 
 # 3. Chuyển đổi thành tensor và padding
